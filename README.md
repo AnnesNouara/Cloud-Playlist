@@ -1,4 +1,4 @@
-loud Playlist Tracker
+Cloud Playlist Tracker
 
 Cloud Playlist Tracker is a backend-focused project designed to manage tracks and playlists in a structured and scalable way. The project currently focuses on building the core API using FastAPI, SQLAlchemy, and SQLite. It will later expand into a full-stack application with a Svelte frontend and optional user authentication.
 
