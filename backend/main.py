@@ -4,6 +4,8 @@ from database import Base, engine, SessionLocal
 import models
 import schemas
 from schemas import TrackCreate, TrackResponse
+from fastapi.middleware.cors import CORSMiddleware
+
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
@@ -14,6 +16,15 @@ app = FastAPI(
     description="Spotify- Like playlist app",
     version="1.0.0"
 )
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 def get_db():
     db = SessionLocal()
