@@ -4,7 +4,7 @@
   const API_BASE = 'http://127.0.0.1:8000';
 
   type Track = {
-    id: number;
+    id: string;
     song_name: string;
     artist: string;
     duration: string;
@@ -13,11 +13,6 @@
   let tracks: Track[] = [];
   let loading = true;
   let error: string | null = null;
-
-  // form fields
-  let song_name = '';
-  let artist = '';
-  let duration = '';
 
   async function loadTracks() {
     loading = true;
@@ -36,151 +31,78 @@
     }
   }
 
-  async function createTrack() {
-    error = null;
-
-    try {
-      const res = await fetch(`${API_BASE}/tracks`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ song_name, artist, duration })
-      });
-
-      if (!res.ok) {
-        throw new Error(`Failed to create track (${res.status})`);
-      }
-
-      const newTrack: Track = await res.json();
-      tracks = [...tracks, newTrack];
-
-      // clear form
-      song_name = '';
-      artist = '';
-      duration = '';
-    } catch (err) {
-      error = err instanceof Error ? err.message : 'Unknown error';
-    }
-  }
-
   onMount(loadTracks);
 </script>
 
 <main>
-  <h1>Cloud Playlist Tracker</h1>
+  <h1>Available Songs!</h1>
 
-  {#if error}
-    <p class="error">{error}</p>
-  {/if}
+  <section class="mt-4">
+    <h2 class="mb-3">Tracks</h2>
 
-  <section class="form-section">
-    <h2>Add Track</h2>
-    <form on:submit|preventDefault={createTrack}>
-      <label>
-        Song name
-        <input bind:value={song_name} required />
-      </label>
-
-      <label>
-        Artist
-        <input bind:value={artist} required />
-      </label>
-
-      <label>
-        Duration
-        <input bind:value={duration} placeholder="e.g. 3M 49S" required />
-      </label>
-
-      <button type="submit">Add</button>
-    </form>
-  </section>
-
-  <section class="list-section">
-    <h2>Tracks</h2>
-
-    {#if loading}
-      <p>Loading tracks...</p>
-    {:else if tracks.length === 0}
-      <p>No tracks yet.</p>
+    {#if tracks.length === 0}
+      <p class="text-muted">No tracks yet.</p>
     {:else}
-      <ul>
-        {#each tracks as track}
-          <li>
-            <strong>{track.song_name}</strong> — {track.artist}
-            <span class="duration">({track.duration})</span>
-          </li>
+      <div class="track-list">
+        {#each tracks as t}
+          <div class="track-item d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+              <div class="track-avatar me-3 d-flex align-items-center justify-content-center">
+                <i class="bi bi-music-note-beamed"></i>
+              </div>
+
+              <div>
+                <a href={`/tracks/${t.id}`} class="fw-semibold text-decoration-none">
+                  {t.song_name}
+                </a>
+                <div class="text-muted small">{t.artist}</div>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-3">
+              <span class="text-muted small">{t.duration}</span>
+
+              <!-- later you can put edit / delete icons here -->
+              {#if false}
+                <i class="bi bi-pencil-square"></i>
+                <i class="bi bi-trash text-danger"></i>
+              {/if}
+               </div>
+          </div>
         {/each}
-      </ul>
+      </div>
     {/if}
   </section>
 </main>
 
 <style>
-  main {
-    max-width: 700px;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  }
-
-  h1 {
-    margin-bottom: 1.5rem;
-    margin-right: 5em;
-  }
-
-  .form-section,
-  .list-section {
-    margin-bottom: 1rem;
-    
-  }
-
-  form {
-    display: grid;
-    max-width: 400px;
-  }
-
-  label {
-    display: flex;
-    flex-direction: column;
-    font-size: 0.9rem;
-  }
-
-  input {
-    padding: 0.4rem 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  button {
+  .track-list {
+    border-top: 1px solid #eee;
     margin-top: 0.5rem;
-    padding: 0.5rem 0.9rem;
-    border: none;
-    border-radius: 4px;
-    background: #2563eb;
+  }
+
+  .track-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f1f1f1;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .track-item:hover {
+    background: #f8fafc;
+    transform: translateY(-1px);
+  }
+
+  .track-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: #111827;
     color: white;
-    font-weight: 500;
-    cursor: pointer;
+    font-size: 1.1rem;
   }
 
-  button:hover {
-    background: #1d4ed8;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  li {
-    padding: 0.4rem 0;
-    border-bottom: 1px solid #eee;
-  }
-
-  .duration {
-    color: #555;
-    font-size: 0.85rem;
-    margin-left: 0.25rem;
-  }
-
-  .error {
-    color: #b91c1c;
-    margin-bottom: 1rem;
+  .track-avatar i {
+    display: block;
   }
 </style>
+

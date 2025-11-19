@@ -27,7 +27,7 @@
   <nav class="container-xl flex-wrap flex-md-nowrap" aria-label="Main navigation">
 		<div class="container-fluid main-wrapper">
 			<a class="navbar-brand" href="/">
-				<i class="bi bi-code-circle me-2"></i>Cloud playlist app
+				<i class="bi bi-music-note me-2"></i>Cloud playlist App
 			</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -36,7 +36,10 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav me-auto">
 					<li class="nav-item">
-						<a class="nav-link active" href="/tracks"><i class="bi bi-house me-1"></i>Tracks</a>
+						<a class="nav-link active" href="/tracks"><i class="bi bi-eye"></i>Tracks</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" href="/tracks/create"><i class="bi bi-plus-circle"></i>Add Tracks</a>
 					</li>
 				</ul>
 			</div>

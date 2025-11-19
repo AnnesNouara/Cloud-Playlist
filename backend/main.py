@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import Base, engine, SessionLocal
 import models
@@ -52,3 +52,13 @@ def get_track(db: Session = Depends(get_db)):
 
     return results
 
+
+
+@app.get("/tracks/{track_id}",response_model=schemas.TrackResponse)
+def get_track_id(track_id: int, db: Session = Depends(get_db)):
+    track = db.query(models.Track).filter(models.Track.id == track_id).first()
+
+    if not track:
+        raise HTTPException(status_code=404, detail="Track not found")
+
+    return track
