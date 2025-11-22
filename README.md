@@ -11,11 +11,11 @@ Create new tracks with title, artist, and duration
 
 Retrieve all tracks
 
-Retrieve individual tracks by ID (planned)
+Retrieve individual tracks by ID 
 
-Update track information (planned)
+Update track information 
 
-Delete tracks (planned)
+Delete tracks
 
 Playlist System (Planned)
 
