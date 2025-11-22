@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 
 	const API_BASE = 'http://127.0.0.1:8000';
 
@@ -48,8 +49,9 @@
 		<p><strong>Artist:</strong> {track.artist}</p>
 		<p><strong>Duration:</strong> {track.duration}</p>
 		<p><strong>ID:</strong> {track.id}</p>
-
-		<a href="/tracks">⬅ Back</a>
+		<button class="btn btn-success" on:click={() => goto(`/tracks/${id}/edit`)}>Edit</button>
+		<button class="btn btn-danger" on:click={() => goto(`/tracks/${id}/delete`)}>Delete</button>
+		<a href="/tracks">View All Tracks</a>
 	</div>
 {/if}
 
@@ -60,4 +62,5 @@
 		border-radius: 8px;
 		max-width: 450px;
 	}
+
 </style>
