@@ -34,6 +34,7 @@
 
       const newTrack: Track = await res.json();
       tracks = [...tracks, newTrack];
+      alert('Track added')
 
       // clear form
       song_name = '';
@@ -48,7 +49,6 @@
 
 <main>
   <h1>Cloud Playlist Tracker</h1>
-
   {#if error}
     <p class="error">{error}</p>
   {/if}
@@ -73,6 +73,30 @@
 
       <button type="submit">Add</button>
     </form>
+    <p></p>
+    <a href="/tracks">View All Tracks</a>
+    <p></p>
+    <p></p>
+
+    <h3>Recently Added Tracks...</h3>
+    <div class="track-list">
+        {#each tracks as t}
+          <div class="track-item d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+              <div class="track-avatar me-3 d-flex align-items-center justify-content-center">
+                <i class="bi bi-music-note-beamed"></i>
+              </div>
+
+              <div>
+                <a href={`/tracks/${t.id}`} class="fw-semibold text-decoration-none">
+                  {t.song_name}
+                </a>
+                <div class="text-muted small">{t.artist}</div>
+              </div>
+            </div>
+          </div>
+        {/each}
+      </div>
   </section>
 
 </main>
@@ -81,6 +105,7 @@
   main {
     max-width: 700px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    margin-left: 27em;
   }
 
   h1 {
@@ -123,6 +148,15 @@
 
   button:hover {
     background: #1d4ed8;
+  }
+
+  .track-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: #111827;
+    color: white;
+    font-size: 1.1rem;
   }
 
   .error {

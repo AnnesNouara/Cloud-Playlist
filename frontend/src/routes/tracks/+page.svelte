@@ -61,12 +61,7 @@
 
             <div class="d-flex align-items-center gap-3">
               <span class="text-muted small">{t.duration}</span>
-
-              <!-- later you can put edit / delete icons here -->
-              {#if false}
-                <i class="bi bi-pencil-square"></i>
-                <i class="bi bi-trash text-danger"></i>
-              {/if}
+        
                </div>
           </div>
         {/each}
